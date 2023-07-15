@@ -13,14 +13,18 @@ class Dosen extends Model
 
     protected $guarded = ['id'];
 
+    public function scopeActive($query) {
+        return $query->where('flag', '=', 1);
+    }
+
     public function getAll()
     {
-        return $this->where('role', 'dosen')->get();
+        return $this->where('role', 'dosen')->active()->get();
     }
 
     public function getById($id)
     {
-        return $this->where('role', 'dosen')->where('id', $id)->first();
+        return $this->where('role', 'dosen')->active()->where('id', $id)->first();
     }
 
     public function store($data)
@@ -30,11 +34,11 @@ class Dosen extends Model
 
     public function updateData($id, $data)
     {
-        return $this->where('id', $id)->update($data);
+        return $this->active()->where('id', $id)->update($data);
     }
 
     public function deleteData($id)
     {
-        return $this->where('id', $id)->delete();
+        return $this->where('id', $id)->update(['flag' => 0]);
     }
 }

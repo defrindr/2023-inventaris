@@ -37,6 +37,15 @@ class RuanganHelper
     ];
   }
 
+  public function getAvailable()
+  {
+    return [
+      'status_code' => 200,
+      'data' => $this->ruanganModel->active()->available()->get(),
+      'message' => 'Data berhasil diambil'
+    ];
+  }
+
   public function create(array $payload)
   {
     DB::beginTransaction();

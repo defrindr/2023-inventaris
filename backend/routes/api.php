@@ -65,6 +65,7 @@ Route::group([
     Route::group(['prefix' => 'ruangan'], function ($router) {
         Route::post('/', [RuanganController::class, 'store']);
         Route::get('/', [RuanganController::class, 'getAll']);
+        Route::get('/available', [RuanganController::class, 'getAvailable']);
         Route::put('/{id}', [RuanganController::class, 'update']);
         Route::get('/{id}', [RuanganController::class, 'getById']);
         Route::delete('/{id}', [RuanganController::class, 'delete']);
@@ -73,14 +74,16 @@ Route::group([
 });
 
 Route::group([
-        'middleware' => 'api',
-        'prefix'    => 'transaction'
-    ], function ($router) {
-        Route::group(['prefix' => 'ruangan'], function ($router) {
-            Route::post('/', [TransactionRuanganController::class, 'store']);
-            Route::get('/', [TransactionRuanganController::class, 'getAll']);
-            Route::put('/{id}', [TransactionRuanganController::class, 'update']);
-            Route::get('/{id}', [TransactionRuanganController::class, 'getById']);
-            Route::delete('/{id}', [TransactionRuanganController::class, 'delete']);
-        });
+    'middleware' => 'api',
+    'prefix'    => 'transaction'
+], function ($router) {
+    Route::group(['prefix' => 'ruangan'], function ($router) {
+        Route::post('/', [TransactionRuanganController::class, 'store']);
+        Route::get('/', [TransactionRuanganController::class, 'getAll']);
+        Route::get('/history', [TransactionRuanganController::class, 'getHistory']);
+        Route::post('/change/{id}/to/{status}', [TransactionRuanganController::class, 'updateStatus']);
+        Route::put('/{id}', [TransactionRuanganController::class, 'update']);
+        Route::get('/{id}', [TransactionRuanganController::class, 'getById']);
+        Route::delete('/{id}', [TransactionRuanganController::class, 'delete']);
     });
+});

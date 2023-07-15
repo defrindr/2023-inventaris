@@ -23,6 +23,12 @@ class RuanganController extends Controller
         return response()->json($response, $response['status_code']);
     }
 
+    public function getAvailable()
+    {
+        $response = $this->ruanganHelper->getAvailable();
+        return response()->json($response, $response['status_code']);
+    }
+
     public function getById($id)
     {
         $response = $this->ruanganHelper->getById($id);
@@ -30,7 +36,7 @@ class RuanganController extends Controller
     }
 
     public function store(CreateRequest $request)
-    {  
+    {
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->json($request->validator->errors(), 422);
         }

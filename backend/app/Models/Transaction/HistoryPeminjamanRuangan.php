@@ -13,6 +13,26 @@ class HistoryPeminjamanRuangan extends Model
     protected $table = 'history_peminjaman_ruangan';
     protected $guarded = ['id'];
 
+    public function scopeHistory($query)
+    {
+        return $query->whereIn('status', ['ditolak', 'dikembalikan']);
+    }
+
+    public function scopeProgress($query)
+    {
+        return $query->whereIn('status', ['tertunda', 'dipinjam', 'ajukankembali']);
+    }
+
+    public function getAllProgress()
+    {
+        return $this->progress()->with(['ruangan'])->get();
+    }
+
+    public function getAllHistory()
+    {
+        return $this->history()->with(['ruangan'])->get();
+    }
+
     public function getAll()
     {
         return $this->with(['ruangan'])->get();
@@ -23,14 +43,21 @@ class HistoryPeminjamanRuangan extends Model
         return $this->belongsTo(Ruangan::class, 'ruangan_id', 'id');
     }
 
+
     public function getById($id)
     {
         return $this->where('id', $id)->with(['ruangan'])->first();
     }
 
+    public function changeStatus($status)
+    {
+        return $this->update(['status' => $status]);
+    }
+
     public function store($data)
     {
-        return $this->create($data);
+        $model = $this->create($data);
+        return $model;
     }
 
     public function updateData($id, $data)
