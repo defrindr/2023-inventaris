@@ -25,12 +25,24 @@ class HistoryPeminjamanRuangan extends Model
 
     public function getAllProgress()
     {
-        return $this->progress()->with(['ruangan'])->get();
+        $user = auth()->guard()->user();
+        if (!$user) return [];
+        $query  = $this->progress();
+        if ($user->role == "mahasiswa") {
+            $query->where('user_id', $user->id);
+        }
+        return $query->with(['ruangan'])->get();
     }
 
     public function getAllHistory()
     {
-        return $this->history()->with(['ruangan'])->get();
+        $user = auth()->guard()->user();
+        if (!$user) return [];
+        $query  = $this->history();
+        if ($user->role == "mahasiswa") {
+            $query->where('user_id', $user->id);
+        }
+        return $query->with(['ruangan'])->get();
     }
 
     public function getAll()
@@ -56,7 +68,8 @@ class HistoryPeminjamanRuangan extends Model
 
     public function store($data)
     {
-        $model = $this->create($data);
+        $user = auth()->guard()->user();
+        $model = $this->create(array_merge($data, ['user_id' => $user->id]));
         return $model;
     }
 
