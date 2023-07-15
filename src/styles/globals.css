@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#sidebar a.active,
+#mobile a.active {
+  @apply font-bold bg-slate-100 border border-slate-200 text-slate-700;
+}
+
+.chakra-tabs__tab {
+  @apply rounded-md !important;
+}
+
+.bg-primary{
+  @apply bg-blue-600 !important;
+}
+
+.bg-secondary{
+  @apply bg-gray-600 !important;
+}
+
+.bg-warning{
+  @apply bg-yellow-500 !important;
+}
+
+.bg-danger{
+  @apply bg-red-500 !important;
+}
+
+.bg-success{
+  @apply bg-green-500 !important;
+}
+
+.bg-info{
+  @apply bg-blue-400 !important;
+}
+
+.btn-primary{
+  @apply bg-blue-600 !important;
+}
+
+.btn-primary:hover{
+  @apply bg-blue-900 !important;
+}
+
+.btn-secondary{
+  @apply bg-gray-600 !important;
+}
+
+.btn-secondary:hover{
+  @apply bg-gray-900 !important;
+}
+
+.btn-warning{
+  @apply bg-yellow-500 !important;
+}
+
+.btn-warning:hover{
+  @apply bg-yellow-700 !important;
+}
+
+.btn-danger{
+  @apply bg-red-500 !important;
+}
+
+.btn-danger:hover{
+  @apply bg-red-700 !important;
+}
+
+.btn-success{
+  @apply bg-green-500 !important;
+}
+
+.btn-success:hover{
+  @apply bg-green-700 !important;
+}
+
+.btn-info{
+  @apply bg-blue-400 !important;
+}
+
+.btn-info:hover{
+  @apply bg-blue-700 !important;
+}
+
+.error-message {
+  color: #e53e3e; /* or any other desired color */
+  font-size: 0.875rem; /* or any other desired font size */
+  margin-top: 0.5rem; /* or any other desired margin */
+}
