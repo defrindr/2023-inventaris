@@ -176,6 +176,10 @@ class RuanganTransactionHelper
   public function delete(int $id)
   {
     DB::beginTransaction();
+    $user = auth()->user();
+    if (!$user) {
+      return $this->sendResponse(401, "Unauthorization");
+    }
 
     try {
 
@@ -186,7 +190,12 @@ class RuanganTransactionHelper
         'message' => 'Data tidak ditemukan'
       ];
       if (in_array($model->status, ['dipinjam', 'tertunda', 'ajukankembali'])) {
-        return $this->sendResponse(400, 'Tidak dapat menghapus data dengan status tertunda / dipinjam');
+        if ($user->id === $model->user_id && $model->status === "tertunda") {
+          // change room status to available, if user performing delete is creator
+          $model->ruangan->changeToAvailable();
+        } else {
+          return $this->sendResponse(400, 'Tidak dapat menghapus data dengan status tertunda / ajukankembali / dipinjam');
+        }
       }
 
       $ruangan = $this->transaction->deleteData($id);
