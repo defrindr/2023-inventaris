@@ -24,6 +24,7 @@ CREATE TABLE `failed_jobs` (
 DROP TABLE IF EXISTS `history_peminjaman_ruangan`;
 CREATE TABLE `history_peminjaman_ruangan` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned DEFAULT NULL,
   `ruangan_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tgl_mulai` date NOT NULL,
   `tgl_selesai` date NOT NULL,
@@ -32,13 +33,15 @@ CREATE TABLE `history_peminjaman_ruangan` (
   `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `history_peminjaman_ruangan_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `history_peminjaman_ruangan` (`id`, `ruangan_id`, `tgl_mulai`, `tgl_selesai`, `description`, `status`, `photo`, `created_at`, `updated_at`) VALUES
-(6,	'1',	'2023-07-15',	'2023-07-17',	'-',	'ditolak',	NULL,	'2023-07-15 03:20:42',	'2023-07-15 03:57:44'),
-(7,	'3',	'2023-07-15',	'2023-07-17',	'asdasd',	'dikembalikan',	NULL,	'2023-07-15 03:58:08',	'2023-07-15 03:59:02'),
-(8,	'2',	'2023-07-15',	'2023-07-18',	'tanding bola',	'tertunda',	NULL,	'2023-07-15 04:19:02',	'2023-07-15 04:19:02');
+INSERT INTO `history_peminjaman_ruangan` (`id`, `user_id`, `ruangan_id`, `tgl_mulai`, `tgl_selesai`, `description`, `status`, `photo`, `created_at`, `updated_at`) VALUES
+(6,	3,	'1',	'2023-07-15',	'2023-07-17',	'-',	'ditolak',	NULL,	'2023-07-15 03:20:42',	'2023-07-15 03:57:44'),
+(7,	3,	'3',	'2023-07-15',	'2023-07-17',	'asdasd',	'dikembalikan',	NULL,	'2023-07-15 03:58:08',	'2023-07-15 03:59:02'),
+(8,	3,	'2',	'2023-07-15',	'2023-07-18',	'tanding bola',	'tertunda',	NULL,	'2023-07-15 04:19:02',	'2023-07-15 04:19:02');
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -107,4 +110,4 @@ INSERT INTO `users` (`id`, `username`, `nama`, `email`, `role`, `no_identitas`, 
 (3,	'ferdi',	'Ferdi Sanjaya',	'ferdi@gmail.com',	'mahasiswa',	'3120510',	'082',	'/mahasiswa/64b282badef14.png',	NULL,	'$2a$12$zPrVCU0N.IQqo9qv1fVxG./RpyutJIdIAX7PrZScaRlWn/t0hwkTu',	NULL,	'2023-07-13 11:49:29',	'2023-07-15 04:27:54',	1),
 (4,	'ferdi',	'Sastro',	'ferdians@gmail.com',	'mahasiswa',	'3120510',	'082131955086',	'/mahasiswa/64b047c26ac71.jpeg',	NULL,	'$2a$12$zPrVCU0N.IQqo9qv1fVxG./RpyutJIdIAX7PrZScaRlWn/t0hwkTu',	NULL,	'2023-07-13 11:51:46',	'2023-07-15 01:10:50',	0);
 
--- 2023-07-15 11:37:17
+-- 2023-07-15 12:16:12
