@@ -1,15 +1,32 @@
 import MobileMenu from "@/components/mobile-menu";
 import ProfileMenu from "@/components/profile-menu";
 import sidebarItems from "@/data/sidebar";
+import { environment } from "@/environments/environments";
 import { IconButton, MenuDivider, MenuGroup, MenuItem, MenuList, useDisclosure } from "@chakra-ui/react";
 import { useViewportSize } from "@mantine/hooks";
 import { BellIcon } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { width } = useViewportSize();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const loadUser = async () => {
+      let accountLoggedIn = localStorage.getItem('user');
+      // check if user data is exist
+      if (accountLoggedIn) {
+        // decode user data
+        accountLoggedIn = JSON.parse(accountLoggedIn);
+        // inject to reactive variable
+        setUser(() => accountLoggedIn);
+      }
+    }
+
+    loadUser();
+  }, [])
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -40,7 +57,7 @@ export default function Navbar() {
         <div className="flex items-center justify-center gap-4">
           <IconButton icon={<BellIcon />} variant="ghost" aria-label="Notifications" />
 
-          <ProfileMenu imageUrl="https://cdn.lifeloe.net/wp/wp-content/uploads/2019/05/Feby-Putri-10.jpg" name="Feby Putri Nilam Cahyani" nim="J0303201006">
+          <ProfileMenu imageUrl={`${environment.fileUrl}/${user?.foto}`} name={user?.nama ?? 'Unknown User'} nim={user?.no_identitas ?? '-'}>
             <MenuList>
               <MenuGroup title="Profile">
                 <MenuItem>My Account</MenuItem>

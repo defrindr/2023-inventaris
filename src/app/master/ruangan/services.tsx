@@ -14,6 +14,12 @@ export function getRooms() {
   });
 }
 
+export function getAvailableRoom() {
+  return axios.get<{ data: Rooms[] }>(environment.apiURL + "/master/ruangan/available").then((response) => {
+    return response.data.data;
+  });
+}
+
 export function getRoom(id: any) {
   return axios.get<{ data: Rooms }>(environment.apiURL + "/master/ruangan/" + id).then((response) => {
     return response.data.data;

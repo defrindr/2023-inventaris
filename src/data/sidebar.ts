@@ -78,7 +78,7 @@ const sidebarItems = [
       },
       {
         title: "Riwayat Peminjaman",
-        href: "/dashboard/loan-history",
+        href: "/peminjaman/ruangan/history",
         items: [],
         end: false,
       },

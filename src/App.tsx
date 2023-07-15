@@ -13,7 +13,6 @@ import TransactionRoutes from "./app/peminjaman/routes";
 const queryClient = new QueryClient();
 export default function App() {
   const navigate = useNavigate();
-  console.log({ token: localStorage.getItem("token") });
 
   if (localStorage.getItem("token") === null && window.location.pathname !== "/login" && window.location.pathname !== "/register") {
     AlertError("Anda harus login terlebih dahulu");
